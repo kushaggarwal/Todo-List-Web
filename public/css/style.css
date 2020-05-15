@@ -1,0 +1,11 @@
+.header {
+  display: inline-block;
+  margin-top: 20px;
+  margin-right: 40px;
+  margin-left: 20px;
+  font-family: "Roboto Slab", serif;
+}
+.sub-header {
+  display: inline-block;
+  font-family: "Raleway", sans-serif;
+}

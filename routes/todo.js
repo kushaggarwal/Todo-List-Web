@@ -25,8 +25,4 @@ router.route("/").post((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/").get((req, res) => {
-  res.send("Helllo");
-});
-
 module.exports = router;
