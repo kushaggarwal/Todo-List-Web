@@ -1,11 +1,36 @@
 .header {
   display: inline-block;
-  margin-top: 20px;
-  margin-right: 40px;
+  margin-top: 40px;
   margin-left: 20px;
-  font-family: "Roboto Slab", serif;
+  text-decoration: underline;
+  font-size: 36pt;
+
+  font-family: "Raleway", sans-serif;
+  color: white;
 }
 .sub-header {
   display: inline-block;
-  font-family: "Raleway", sans-serif;
+  font-family: "Roboto Slab", serif;
+}
+
+.intro {
+  height: 900px;
+  color: white;
+  background-color: #00ad4e;
+}
+.list-main {
+  font-size: 22pt;
+}
+.list {
+  margin-left: 60px;
+}
+
+.register {
+  margin: 0 auto;
+  padding-top: 70px;
+  width: 350px;
+  height: 550px;
+  background-color: white;
+  border: 10px solid #075c28;
+  border-radius: 30px;
 }
