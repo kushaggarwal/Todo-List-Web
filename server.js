@@ -40,6 +40,9 @@ app.use("/", require("./routes/index"));
 app.use("/users", require("./routes/user"));
 
 app.use("/todos", todoRouter);
+app.get("/new", (req, res) => {
+  res.render("new");
+});
 
 dbConnection();
 app.listen(port, () => {
