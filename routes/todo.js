@@ -1,5 +1,6 @@
 const router = require("express").Router();
 let todo = require("../models/todo");
+const { ensureAuthenticated } = require("../config/auth");
 
 router.route("/").post((req, res) => {
   console.log("At todods");
@@ -23,6 +24,17 @@ router.route("/").post((req, res) => {
       res.json("Todo Added");
     })
     .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.route("/list").get((req, res) => {
+  todo
+    .find()
+    .then((data) => {
+      res.render("todo", { data });
+    })
+    .catch((err) => {
+      res.status(400).json("Error" + err);
+    });
 });
 
 module.exports = router;
