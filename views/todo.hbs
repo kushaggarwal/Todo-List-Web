@@ -16,6 +16,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
   <style>
     .card-body {
       margin: 30px 0px;
@@ -24,6 +25,10 @@
     .card {
       margin: 30px 0px;
     }
+
+    body {
+      font-family: 'Lato', sans-serif;
+    }
   </style>
 </head>
 
@@ -31,7 +36,9 @@
   <div style="background-color:#0d47a1;height:200px;color:white;text-align: center;">
     <h2 style="padding-top:10px"><img src="https://img.icons8.com/plasticine/100/000000/task.png" />Lets see what you
       have to do .....</h2>
-    <button type="button" class="btn btn-success btn-lg">New Task</button>
+    <button type="button" style="background-color: #ef6c00;color:white" class="btn btn-lg" data-toggle="modal"
+      data-target="#exampleModalCenter">New
+      Task</button>
   </div>
   </div>
   <div class="container">
@@ -41,7 +48,7 @@
       </div>
       <div class="col-2">
         <div class="dropdown">
-          <button class="btn btn-danger btn-lg  dropdown-toggle" type="button" id="dropdownMenuButton"
+          <button class="btn btn-primary btn-lg  dropdown-toggle" type="button" id="dropdownMenuButton"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Status
           </button>
@@ -54,7 +61,7 @@
       </div>
       <div class="col-2">
         <div class="dropdown">
-          <button class="btn btn-warning btn-lg dropdown-toggle" type="button" id="dropdownMenuButton"
+          <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Label
           </button>
@@ -71,26 +78,91 @@
     <div class="row">
       {{#each data as |item|}}
       <div class="col-sm-4">
-        <div style="border-radius: 20px;" class="card">
-          <div class="card-header"
-            style="background-color:#d32f2f;color:white;font-size:20pt;border-radius: 20px 20px 0px 0px;">
-            {{item.status}}
+        <div style="border:0.5px solid lightgrey;width:300px;border-radius:5px;margin:40px 0px">
+          <div style="padding:20px">
+            <div>
+              <h4>{{item.title}}
+              </h4>
+
+            </div>
+
+            <hr />
+            <p style="color:grey">{{item.content}}</p>
+            {{#equal item.status "Completed"}}
+            <h4><span class="badge badge-success"></span></h4>
+            {{/equal}}
+            {{#equal item.status "New"}}
+            <h4><span class="badge badge-warning"></span></h4>
+            {{/equal}}
+            {{#equal item.status "In Progress"}}
+            <h4><span class="badge badge-danger"></span></h4>
+            {{/equal}}
+            <h5 style="text-align: center">
+              <button type="button" class="btn btn-success btn-block">Edit</button>
+              <button type="button" class="btn btn-danger btn-block">Delete</button>
+            </h5>
+
           </div>
-          <div class="card-body" style="margin:10px 0px">
-            <h5 class="card-title">{{item.title}}</h5>
-            <p class="card-text">
-              {{item.content}}
-            </p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">Due Date :{{item.dueDate}} </small>
-          </div>
+
         </div>
       </div>
       {{/each}}
 
     </div>
   </div>
+  {{!-- Modal starts here --}}
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">New Task</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="/todos">
+            <div class="form-group">
+              <label>Title</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" name="title" aria-describedby="emailHelp"
+                placeholder="Enter Title">
+
+            </div>
+            <div class="form-group">
+              <label>Content</label>
+              <textarea type="text" name="content" style="height:120px" class="form-control" id="exampleInputPassword1"
+                placeholder="Enter Content"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Status</label>
+              <select name="status" class="form-control" id="exampleFormControlSelect1">
+                <option>New</option>
+                <option>In Progress</option>
+                <option>Completed</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Label</label>
+              <select name="label" class="form-control" id="exampleFormControlSelect1">
+                <option>Personal</option>
+                <option>Work</option>
+                <option>Shopping</option>
+                <option>Others</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="birthday">Due Date:</label>
+              <input class="form-control" type="date" id="birthday" name="dueDate"></div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </body>
+
 
 </html>

@@ -9,7 +9,6 @@ router.route("/").post((req, res) => {
   const title = req.body.title;
   const content = req.body.content;
   const dueDate = Date.parse(req.body.dueDate);
-
   const newTodo = new todo({
     status,
     label,
@@ -21,7 +20,7 @@ router.route("/").post((req, res) => {
   newTodo
     .save()
     .then(() => {
-      res.json("Todo Added");
+      res.redirect("/todos/list");
     })
     .catch((err) => res.status(400).json("Error: " + err));
 });

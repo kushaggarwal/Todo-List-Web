@@ -43,7 +43,8 @@ app.use("/todos", todoRouter);
 app.get("/new", (req, res) => {
   res.render("new");
 });
-
+const hbs = require("hbs");
+hbs.registerHelper("equal", require("handlebars-helper-equal"));
 dbConnection();
 app.listen(port, () => {
   console.log("Server is running" + port);
