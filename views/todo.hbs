@@ -17,6 +17,8 @@
     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <style>
     .card-body {
       margin: 30px 0px;
@@ -34,7 +36,9 @@
 
 <body>
   <div style="background-color:#0d47a1;height:200px;color:white;text-align: center;">
-    <h2 style="padding-top:10px"><img src="https://img.icons8.com/plasticine/100/000000/task.png" />Lets see what you
+    <h2 style="padding-top:10px" data-aos="fade" data-aos-duration="500"><img
+        src="https://img.icons8.com/plasticine/100/000000/task.png" />Lets
+      see what you
       have to do .....</h2>
     <button type="button" style="background-color: #ef6c00;color:white" class="btn btn-lg" data-toggle="modal"
       data-target="#exampleModalCenter">New
@@ -48,59 +52,73 @@
       </div>
       <div class="col-2">
         <div class="dropdown">
-          <button class="btn btn-primary btn-lg  dropdown-toggle" type="button" id="dropdownMenuButton"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-primary  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
             Status
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a href="/todos/status?status=New" class="dropdown-item status">New</a>
+            <a href="/todos/status?status=In+Progess" class="dropdown-item status">In Progress</a>
+            <a href="/todos/status?status=Completed" class="dropdown-item status">Completed</a>
           </div>
         </div>
       </div>
       <div class="col-2">
         <div class="dropdown">
-          <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
             Label
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a href="/todos/label?label=Personal" class="dropdown-item label">Personal</a>
+            <a href="/todos/label?label=Work" class="dropdown-item label">Work</a>
+            <a href="/todos/label?label=Shopping" class="dropdown-item label">Shopping</a>
+            <a href="/todos/label?label=Others" class="dropdown-item label">Others</a>
+
           </div>
         </div>
       </div>
-      <div class="col-2"></div>
+      <div class="col-2"><button class="btn btn-secondary"><a href="/todos/list" style="color:white">Remove
+            Filter</a></button></div>
       <div class="col"></div>
     </div>
     <div class="row">
       {{#each data as |item|}}
       <div class="col-sm-4">
-        <div style="border:0.5px solid lightgrey;width:300px;border-radius:5px;margin:40px 0px">
+        <div data-aos="zoom-in" data-aos-delay="200"
+          style="border:0.5px solid lightgrey;width:300px;border-radius:5px;margin:40px 0px">
           <div style="padding:20px">
+            <div class="float-right">
+              <img class="delete" data-target={{item._id}}
+                src="https://img.icons8.com/color/20/000000/delete-sign.png" />
+            </div>
+            <br>
             <div>
+
               <h4>{{item.title}}
               </h4>
+              {{#equal item.status "Completed"}}
+              <h4><span class="badge badge-success">{{item.status}}</span></h4>
+              {{/equal}}
+              {{#equal item.status "New"}}
+              <h4><span class="badge badge-warning">{{item.status}}</span></h4>
+              {{/equal}}
+              {{#equal item.status "In Progress"}}
+              <h4><span class="badge badge-danger">{{item.status}}</span></h4>
+              {{/equal}}
 
             </div>
 
             <hr />
             <p style="color:grey">{{item.content}}</p>
-            {{#equal item.status "Completed"}}
-            <h4><span class="badge badge-success"></span></h4>
-            {{/equal}}
-            {{#equal item.status "New"}}
-            <h4><span class="badge badge-warning"></span></h4>
-            {{/equal}}
-            {{#equal item.status "In Progress"}}
-            <h4><span class="badge badge-danger"></span></h4>
-            {{/equal}}
-            <h5 style="text-align: center">
-              <button type="button" class="btn btn-success btn-block">Edit</button>
-              <button type="button" class="btn btn-danger btn-block">Delete</button>
-            </h5>
+
+
+            <p style="color:grey;margin-top:20px"><img style="margin:0px 10px"
+                src="https://img.icons8.com/office/30/000000/date-to.png" />Due
+              Date :
+              {{item.dueDate}}</p>
+            <button class="btn btn-outline-primary btn-block edit" type="button" data-toggle="modal"
+              data-target="#editModal" data-component={{item._id}}>Edit</button>
 
           </div>
 
@@ -162,7 +180,114 @@
       </div>
     </div>
   </div>
-</body>
+  {{!--Edit Modal--}}
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Edit Task</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="/todos/update">
+            <div class="form-group">
+              <input type="text" name="id" id="id" />
+              <label>Title</label>
+              <input type=" text" id="title" class="form-control" id="exampleInputEmail1" name="title"
+                aria-describedby="emailHelp" placeholder="Enter Title">
 
+            </div>
+            <div class="form-group">
+              <label>Content</label>
+              <textarea id="content" type="text" name="content" style="height:120px" class="form-control"
+                id="exampleInputPassword1" placeholder="Enter Content"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Status</label>
+              <select name="status" class="form-control" id="status">
+                <option>New</option>
+                <option>In Progress</option>
+                <option>Completed</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Label</label>
+              <select name="label" class="form-control" id="label">
+                <option>Personal</option>
+                <option>Work</option>
+                <option>Shopping</option>
+                <option>Others</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="birthday">Due Date</label>
+              <p id="date"></p>
+              <input class="form-control" type="date" id="dueDate" name="dueDate">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  $(document).ready(function () {
+    let deleteId = $('.delete')
+    let status = $(".status")
+    let label = $(".label")
+    deleteId.click((ev) => {
+      console.log("Button Clicked")
+      let postId = $(ev.target).attr('data-target')
+      axios.get("/todos/delete", {
+        params: {
+          Id: postId
+        }
+      })
+        .then(function (response) {
+          location.reload()
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    })
+
+    $("#id").hide();
+
+    $('.edit').click((ev) => {
+      let postId = $(ev.target).attr('data-component')
+      let url = "/todos/" + postId
+      axios.get(url)
+        .then(response => {
+          editData = response.data.result
+          console.log(editData)
+        }).then(() => {
+          $("#title").val(editData.title)
+          $("#content").val(editData.content)
+          $("#label").val(editData.label)
+          $("#status").val(editData.status)
+          $("#date").text(editData.dueDate)
+          $('#id').val(editData._id)
+        })
+
+
+    })
+  })
+
+
+
+
+
+
+</script>
+<script>
+  AOS.init();
+</script>
 
 </html>

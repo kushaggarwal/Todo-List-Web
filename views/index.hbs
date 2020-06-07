@@ -18,19 +18,21 @@
         crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
 
 <body>
     <div class="header">
         <div class="row">
             <div class="col-lg-6 col-sm-12">
-                <div style="margin-left:50px">
+                <div data-aos="fade-left" style="margin-left:50px">
                     <img class="img-fluid" src="/images/download.png" alt="" srcset="">
                 </div>
 
             </div>
             <div class="col-lg-6 col-sm-12">
-                <div class="header-text">
+                <div data-aos="fade-right" class="header-text">
                     <p style="font-size: 50pt;">Todo App</p>
                     <h3 style="color:rgb(202, 204, 207)">Manage your tasks here !!
                     </h3>
@@ -45,5 +47,8 @@
     </div>
 
 </body>
+<script>
+    AOS.init();
+</script>
 
 </html>

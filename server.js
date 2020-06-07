@@ -10,6 +10,7 @@ const User = require("./models/user");
 const flash = require("connect-flash");
 const passport = require("passport");
 require("./config/passport")(passport);
+const { ensureAuthenticated } = require("./config/auth");
 
 app.use(bodyPareser.json());
 
@@ -39,7 +40,7 @@ const todoRouter = require("./routes/todo");
 app.use("/", require("./routes/index"));
 app.use("/users", require("./routes/user"));
 
-app.use("/todos", todoRouter);
+app.use("/todos", ensureAuthenticated, todoRouter);
 app.get("/new", (req, res) => {
   res.render("new");
 });
