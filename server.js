@@ -32,7 +32,7 @@ app.use(flash());
 app.set("view engine", "hbs");
 app.use(express.static("public"));
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.use(bodyPareser.json());
 
