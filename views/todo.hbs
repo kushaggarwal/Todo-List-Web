@@ -58,7 +58,7 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a href="/todos/status?status=New" class="dropdown-item status">New</a>
-            <a href="/todos/status?status=In+Progess" class="dropdown-item status">In Progress</a>
+            <a href="/todos/status?status=Ongoing" class="dropdown-item status">Ongoing</a>
             <a href="/todos/status?status=Completed" class="dropdown-item status">Completed</a>
           </div>
         </div>
@@ -103,7 +103,7 @@
               {{#equal item.status "New"}}
               <h4><span class="badge badge-warning">{{item.status}}</span></h4>
               {{/equal}}
-              {{#equal item.status "In Progress"}}
+              {{#equal item.status "Ongoing"}}
               <h4><span class="badge badge-danger">{{item.status}}</span></h4>
               {{/equal}}
 
@@ -157,7 +157,7 @@
               <label for="exampleFormControlSelect1">Status</label>
               <select name="status" class="form-control" id="exampleFormControlSelect1">
                 <option>New</option>
-                <option>In Progress</option>
+                <option>Ongoing</option>
                 <option>Completed</option>
               </select>
             </div>
@@ -210,7 +210,7 @@
               <label for="exampleFormControlSelect1">Status</label>
               <select name="status" class="form-control" id="status">
                 <option>New</option>
-                <option>In Progress</option>
+                <option>Ongoing</option>
                 <option>Completed</option>
               </select>
             </div>
@@ -273,6 +273,7 @@
           $("#label").val(editData.label)
           $("#status").val(editData.status)
           $("#date").text(editData.dueDate)
+          $('#dueDate').val(editData.dueDate)
           $('#id').val(editData._id)
         })
 
