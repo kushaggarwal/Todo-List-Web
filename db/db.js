@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
-
-const uri =
-  "mongodb+srv://user:Password@cluster1-xenqr.mongodb.net/TodoList?retryWrites=true&w=majority";
-
+require("dotenv").config();
+var url = process.env.MONGOLAB_URI;
+const uri = url;
 function dbConnection() {
   mongoose.connect(uri, {
     useNewUrlParser: true,
